@@ -60,8 +60,7 @@ String = \"{InputCharacter}*\"
 
     {DecIntegerLiteral}{Identifier}
         {
-            System.out.println("ERROR : "+ yytext());
-            System.exit(0);
+            throw new Error("Illegal DecTntegerLiteral <"+yytext()+">");
         }
 
     /* INTEGER */
@@ -85,9 +84,9 @@ String = \"{InputCharacter}*\"
                     }
                 }
             }
-            
+
             if(findIdentifier){
-                System.out.printf("IDENTIFIER \"%s\" ALREADY IN SYMBOL TABLE\n",newIdentifier);
+                System.out.printf("IDENTIFIER : \"%s\" ALREADY IN SYMBOL TABLE\n",newIdentifier);
             }
             else{
                 type = "NEW IDENTIFIER";

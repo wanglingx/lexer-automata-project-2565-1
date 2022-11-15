@@ -929,9 +929,9 @@ public class Lexer {
                     }
                 }
             }
-            
+
             if(findIdentifier){
-                System.out.printf("IDENTIFIER \"%s\" ALREADY IN SYMBOL TABLE\n",newIdentifier);
+                System.out.printf("IDENTIFIER : \"%s\" ALREADY IN SYMBOL TABLE\n",newIdentifier);
             }
             else{
                 type = "NEW IDENTIFIER";
@@ -972,8 +972,7 @@ public class Lexer {
             // fall through
           case 16: break;
           case 8:
-            { System.out.println("ERROR : "+ yytext());
-            System.exit(0);
+            { throw new Error("Illegal DecTntegerLiteral <"+yytext()+">");
             }
             // fall through
           case 17: break;
