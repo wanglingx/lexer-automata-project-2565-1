@@ -1,4 +1,4 @@
-# lexer-automata-project-2565-2
+# lexer-automata-project-2565-1
 # Jflex installation 
 1.Download jflex file and extracting file to your directory
 2.edit jflex .bat file 
