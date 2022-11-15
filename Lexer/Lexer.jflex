@@ -8,13 +8,12 @@ import java.util.List;
 %standalone
 
 %{
+    List<String> symbolTable = new ArrayList<String>();  
+    String type[] = {"Operator","Semicolon","Parenthese","Keywords","Integer","Identifier","New Identifier","String"};
+
     static void printString(String type,String value){
         System.out.println(type+" : "+value);
     }
-
-    List<String> symbolTable = new ArrayList<String>();  
-    int countingIndetifier = 0;
-    String type = "";
 %}
 
 LineTerminator = \r|\n|\r\n
@@ -36,26 +35,24 @@ String = \"{InputCharacter}*\"
     /* OPERATOR */
     {Operator}
         {
-            type = "OPERATOR";
-            printString(type,yytext());
+            printString(type[0],yytext());
         }
     /* SEMICOLON and PARENTHESE */
     {ParentheseAndSemicolon}
         {
-            String type[] = {"SEMICOLON","PARENTHESE"};
             if(yytext().equals(";"))
 
-                printString(type[0],yytext());
+                printString(type[1],yytext());
 
             else
-                printString(type[1],yytext());
+                printString(type[2],yytext());
             
         }
+        
     /* KEYWORDS */
     {Keywords}
         {
-            type = "KEYWORDS";
-            printString(type,yytext());
+            printString(type[3],yytext());
         }
 
     {DecIntegerLiteral}{Identifier}
@@ -66,8 +63,7 @@ String = \"{InputCharacter}*\"
     /* INTEGER */
     {DecIntegerLiteral}
         { 
-            type = "INTEGER";
-            printString(type,yytext());
+            printString(type[4],yytext());
         }
 
     /* IDENTIFIER */
@@ -77,7 +73,7 @@ String = \"{InputCharacter}*\"
             String newIdentifier = yytext();
             //new iden checking
             if(symbolTable.size() > 0){
-                for(int i = 0;i < countingIndetifier;i++){
+                for(int i = 0;i < symbolTable.size() ;i++){
                     if(newIdentifier.equals(symbolTable.get(i))){
                         findIdentifier = true;
                         break;
@@ -86,20 +82,18 @@ String = \"{InputCharacter}*\"
             }
 
             if(findIdentifier){
-                System.out.printf("IDENTIFIER : \"%s\" ALREADY IN SYMBOL TABLE\n",newIdentifier);
+                System.out.printf("Identifier : \"%s\" Already in symbol table\n", newIdentifier);
             }
             else{
-                type = "NEW IDENTIFIER";
-                printString(type,newIdentifier);
+                printString(type[6],newIdentifier);
                 symbolTable.add(newIdentifier);
-                countingIndetifier += 1;
             }  
         }
+        
     /*String*/
     {String}
     {
-        type = "String";
-            printString(type,yytext()); 
+            printString(type[7],yytext()); 
     }
     {CommentContent}
         {}
