@@ -37,6 +37,7 @@ String = \"{InputCharacter}*\"
         {
             printString(type[0],yytext());
         }
+        
     /* SEMICOLON and PARENTHESE */
     {ParentheseAndSemicolon}
         {
@@ -55,15 +56,15 @@ String = \"{InputCharacter}*\"
             printString(type[3],yytext());
         }
 
-    {DecIntegerLiteral}{Identifier}
-        {
-            throw new Error("Illegal DecTntegerLiteral <"+yytext()+">");
-        }
-
     /* INTEGER */
     {DecIntegerLiteral}
         { 
             printString(type[4],yytext());
+        }
+
+    {DecIntegerLiteral}{Identifier}
+        {
+            throw new Error("Illegal DecTntegerLiteral <"+yytext()+">");
         }
 
     /* IDENTIFIER */
@@ -89,7 +90,7 @@ String = \"{InputCharacter}*\"
                 symbolTable.add(newIdentifier);
             }  
         }
-        
+
     /*String*/
     {String}
     {
